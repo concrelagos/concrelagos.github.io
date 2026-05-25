@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status do Pedido</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f5f6fa;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.cpf {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.etapa {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    opacity: 0.4;
+}
+
+.etapa.ativa {
+    opacity: 1;
+}
+
+.bolinha {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #ccc;
+    margin-right: 10px;
+}
+
+.etapa.ativa .bolinha {
+    background: #0cdcc7;
+}
+
+.linha {
+    width: 2px;
+    height: 20px;
+    background: #ccc;
+    margin-left: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div>
+        <img src="./images/logo_original.png" alt="logo concrelagos" style="width: stretch;">
+    </div>
+    
+    <h2>Status do Pedido</h2>
+
+    <div class="cpf" id="cpfExibido"></div>
+
+    <!-- Etapas -->
+    <div class="etapa ativa">
+        <div class="bolinha"></div> Pedido Recebido
+    </div>
+    <div class="linha"></div>
+
+    <div class="etapa ativa">
+        <div class="bolinha"></div> Em Separação
+    </div>
+    <div class="linha"></div>
+
+    <div class="etapa ativa">
+        <div class="bolinha"></div> Em Transporte
+    </div>
+    <div class="linha"></div>
+
+    <div class="etapa">
+        <div class="bolinha"></div> Saiu para Entrega
+    </div>
+    <div class="linha"></div>
+
+    <div class="etapa">
+        <div class="bolinha"></div> Entregue
+    </div>
+
+</div>
+
+<script>
+// mostrar CPF
+let cpf = localStorage.getItem("cpf");
+
+if (cpf) {
+    document.getElementById("cpfExibido").innerText = "CPF: " + cpf;
+}
+</script>
+
+</body>
+</html>

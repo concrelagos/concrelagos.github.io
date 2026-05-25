@@ -1,161 +1,111 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rastreamento - Concrelagos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validação de Acesso</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f6fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f6fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-        .card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            width: 300px;
-        }
+.card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    text-align: center;
+    width: 320px;
+}
 
-        .imgLogo {
-            width: 120px;
-            margin-bottom: 15px;
-        }
+h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
 
-        h1 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
+input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    outline: none;
+}
 
-        .done {
-            margin-bottom: 20px;
-        }
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #0cdcc7, #07a796);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-        #codigo {
-            font-size: 36px;
-            font-weight: bold;
-            letter-spacing: 5px;
-            margin-bottom: 10px;
-        }
+button:hover {
+    opacity: 0.9;
+}
 
-        #tempo {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .barra-container {
-            width: 100%;
-            height: 8px;
-            background: #eee;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .barra {
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(90deg, #0cdcc7, #07a796);
-            transition: width 1s linear;
-        }
-
-        .text {
-            font-size: 13px;
-            color: #555;
-        }
-
-        .text strong {
-            color: #000;
-        }
-    </style>
+.text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 15px;
+}
+</style>
 </head>
 
 <body>
 
-    <div class="card">
-        <img class="imgLogo" src="./images/logo_original.png" alt="logo">
+<div class="card">
 
-        <h1>Dispositivo Validado</h1>
-
-        <div class="done">
-            <svg viewBox="0 0 37 37" width="60">
-                <path fill="#0cdcc7" stroke="#07a796" stroke-width="3"
-                    d="M30.5,6.5c6.6,6.6,6.6,17.4,0,24s-17.4,6.6-24,0s-6.6-17.4,0-24S23.9-0.2,30.5,6.5z" />
-                <polyline fill="none" stroke="#fff" stroke-width="3"
-                    points="11.6,20 15.9,24.2 26.4,13.8" />
-            </svg>
-        </div>
-
-        <div id="codigo">000000</div>
-        <div id="tempo">Expira em 60s</div>
-
-        <div class="barra-container">
-            <div id="barra" class="barra"></div>
-        </div>
-
-        <div class="text">
-            Aguarde o envio do link com código de rastreio<br><br>
-            <strong>Permitido somente neste aparelho</strong><br>
-            ID: 71567
-        </div>
+    <div>
+        <img src="./images/logo_original.png" alt="logo concrelagos">
     </div>
+    <h1>Validação de Acesso</h1>
 
-    <script>
-        let tempoTotal = 60;
-        let tempoRestante = tempoTotal;
+    <input type="text" id="cpf" placeholder="Digite seu CPF" maxlength="14">
+    
+    <button onclick="validar()">Continuar</button>
 
-        function gerarCodigoTempo() {
-            const agora = Math.floor(Date.now() / 60000);
-            let codigo = (agora * 1234567) % 1000000;
-            return codigo.toString().padStart(6, '0');
-        }
+    <div class="text">
+        Seus dados estão protegidos 🔒
+    </div>
+</div>
 
-        function atualizarCodigo() {
-            document.getElementById("codigo").innerText = gerarCodigoTempo();
-        }
+<script>
+// máscara de CPF
+document.getElementById("cpf").addEventListener("input", function(e) {
+    let v = e.target.value.replace(/\D/g, "");
+    v = v.replace(/(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    e.target.value = v;
+});
 
-        function atualizarBarra() {
-            const barra = document.getElementById("barra");
-            const porcentagem = (tempoRestante / tempoTotal) * 100;
-            barra.style.width = porcentagem + "%";
-        }
+function validar() {
+    let cpf = document.getElementById("cpf").value;
 
-        function atualizarTempoTexto() {
-            document.getElementById("tempo").innerText = "Expira em " + tempoRestante + "s";
-        }
+    if (cpf.length < 14) {
+        alert("Digite um CPF válido");
+        return;
+    }
 
-        function iniciar() {
-            atualizarCodigo();
-            atualizarBarra();
-            atualizarTempoTexto();
+    // salva CPF (opcional)
+    localStorage.setItem("cpf", cpf);
 
-            setInterval(() => {
-                tempoRestante--;
-
-                if (tempoRestante <= 0) {
-                    atualizarCodigo();
-                    tempoRestante = tempoTotal;
-                }
-
-                atualizarBarra();
-                atualizarTempoTexto();
-
-            }, 1000);
-        }
-
-        iniciar();
-    </script>
+    // redireciona
+    window.location.href = "status.html";
+}
+</script>
 
 </body>
-
 </html>

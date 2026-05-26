@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido Recebido</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f6fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.info {
+    font-size: 14px;
+    color: #555;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+     <img src="./images/logo_original.png" alt="logo concrelagos" style="width: stretch;">
+    <h1>Pedido Recebido!</h1>
+
+    <p>Seu pedido de concretagem foi enviado com sucesso.</p>
+
+    <div class="info" id="dados"></div>
+
+    <p style="margin-top:20px;">
+        Um atendente entrará em contato para prosseguir com o seu pedido.
+    </p>
+</div>
+
+<script>
+let nome = localStorage.getItem("nome");
+let data = localStorage.getItem("data");
+
+if (nome && data) {
+    document.getElementById("dados").innerHTML =
+        "Cliente: <strong>" + nome + "</strong><br>" +
+        "Data solicitada: <strong>" + data + "</strong>";
+}
+</script>
+
+</body>
+</html>
